@@ -1,0 +1,14 @@
+Eureka 1.2.1 release notes
+
+ReadMe - updated techncial explananation of how Ingest Potential Rate is calculated and how Workload filters can be applied
+
+
+
+Indexer Capacity Estimates (experimental)
+-- Ingest Potential Rate - Blended Across all IDX ((core data based on Function + _time )
+*BUG fix to _time resolution in panel
+
+Splunk Search Review
+-- Search Concurrency dashboard fixed to handle multiple host inputs correctly (SHC configuration. Will provide the Total Search Capacity vs The Total Search Load respectively (uses macro calc_concurrency)
+
+All Dashboards - includes new roles filters (REST API)
