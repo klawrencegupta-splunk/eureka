@@ -1,4 +1,4 @@
-Eureka 1.2.1 release notes
+Eureka 1.2.1 & 1.2.2 release notes
 
 ReadMe - updated techncial explananation of how Ingest Potential Rate is calculated and how Workload filters can be applied
 
@@ -12,3 +12,5 @@ Splunk Search Review
 -- Search Concurrency dashboard fixed to handle multiple host inputs correctly (SHC configuration. Will provide the Total Search Capacity vs The Total Search Load respectively (uses macro calc_concurrency)
 
 All Dashboards - includes new roles filters (REST API)
+
+1.2.2 - minor fix to Time Resolution drop down missing on dashboard preventing auto-population of results
