@@ -1,6 +1,0 @@
-*all*
- - implemented a new macro to differentiate between SDRT based input from a diag that goes to the main index vs Eureka needing to use the _internal & _introspection indices for real-time reporting. 
-
-Infrastructure Overview
- - added a Total vCPU Counter using the API & host filter to get a running total
- - added a Total vCPU Counter with Roles table panel
