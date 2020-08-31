@@ -1,115 +1,102 @@
-<!DOCTYPE html>
 <html>
-  <head>
-  </head>
   <body>
-    <h2>ReadMe - Eureka 1.2</h2>
-    <h3>Disclaimer:</h3>
-    <p><u>This app is provided as part of a POC between Splunk our customers and
-        is not an officially supported Splunk app</u>. All requests for support
-      should be submitted to <a href="mailto:klawrencegupta@splunk.com">klawrencegupta@splunk.com</a>
-      or to the GitHub repository.</p>
-    <h3>Requirements</h3>
+    <h1>Read Me - Eureka 1.2.3 - a Splunk Diagnostic and Performance Evaluation Tool</h1>
+    <p>This app is provided by Kate Lawrence-Gupta and is not support by Splunk.
+      Please report all issues to https://github.com/klawrencegupta-splunk/sdrt/issues</p>
+  <h1> List of Dashboards available</h1>
+    <h2>Capacity Estimates (experimental)</h2>
     <ul>
-      <li>Splunk 7.3.x</li>
-      <li>This app should run on the Monitoring Console as it will need access
-        to all Splunk nodes in the deployment.</li>
+      <li>Ingest Pattern by Function - Reads/Writes
+        MB/per-second + overall Workload</li>
+      <li>Reads/Writes MB/per-second and Workload (CPU Storage
+          Utilization) </li>
+      <ul>
+        <li>Reads/Writes MB/per-second-rate over time based on the Time
+          Range picker + Time Resolution + Function | Overlay is the "Workload"
+          or data.cpu_pct (_introspection)</li>
+      </ul>
+      <li> Ingest Potential Rate - Blended  Across
+          ALL Indexers </li>
+      <ul>
+        <li>-- (core data based on Function + _time )</li>
+        <li>This represents a per-Indexer "score" or in other words:
+          prediction of the 24-hour processing capacity of an indexer(s) given
+          the current ingest pattern utilization and extrapolated over time. The
+          basic idea here is to set a target ingestion rate for the environment
+          using on CPU/Memory/Store as KPIs for an initial capacity measurement.</li>
+      </ul>
+      <li>Ingest Potential RateIndividual Hosts </li>
+      <ul>
+        <li>-- (core data based on Function + _time )</li>
+        <li>Extrapolated GB/day indexer score using a STDEV (50/60/70/80/90)
+          percentiles grouped by GB/day rating</li>
+      </ul>
     </ul>
-    <h2>Dashboards</h2>
-    <h3>Capacity Estimates</h3>
-    <p><strong>Count of Hosts Selected </strong>- keeps a running total of the
-      host count (selected in input) - <em>this can be used for sampling*</em></p>
-    <p><strong>Ingest Potential Rate</strong> - Blended Across all Hosts ((core
-      data based on Function + Time Resolution )</p>
-    inputs along with Time Range picker to calculate a range of Indexer Ingest
-    Rates using a Standard Deviation Percentile distribution of 50/60/70/80/90
-    percentiles.
-    <p>Functions Available:</p>
+    <p> </p>
+    <h2>Infrastructure Detailed Review</h2>
     <ul>
-      <li>Average (default)</li>
-      <li>Max</li>
-      <li>Median</li>
-      <li>Mode</li>
-      <li>First</li>
-      <li>Last</li>
+      <li>Total vCPU Count</li>
+      <li>Total vCPU count by host</li>
+      <li>CPU Utilization -- Minimum/Maximum/Median</li>
+      <li>CPU - Idle% over Time Resolution</li>
+      <li>Memory Utilization % over Time Resolution</li>
+      <li>IO utilization in KB/s over time vs data.cpu_pct utilization </li>
+      <ul>
+        <li>samples as time resolution rate using last(value) data.cpu_pct is
+          the amount of time the server spent processing storage requests: </li>
+        <li>As the workload approaches 100% fewer resources are available to
+          process storage requests (ingest/search) at the host.</li>
+      </ul>
+      <li>IOwait in ms by _time, type, mount_point</li>
+      <ul>
+        <li>Charts provide the Average/Median/Perc95 and Max IOwait using the
+          time resolution selected over the total time available in the diag
+          file. </li>
+        <li>Values exceeding <b>5-10ms</b> are a key performance indicator
+          (KPI) that storage contention has been found on the host.</li>
+      </ul>
     </ul>
-    Time Resolution:
+    <h2>Splunk Application Errors</h2>
     <ul>
-      <li>1h (default)</li>
-      <li>30m</li>
-      <li>15m</li>
-      <li>5m</li>
-      <li>1m</li>
-    </ul>
-    <h4>Example:</h4>
-    Select the past 24 hours using the Time Range picker + Time Resolution of 1
-    hour + Function is avg (average)
-    <p>= the <strong>hourly</strong> <strong>average</strong> of the ingest
-      rate over the <strong>past 24 hours</strong></p>
-    <p><strong>Ingest Potential Rate: Per Host </strong>Standard Deviation
-      Percentile distribution (core data based on Function + Time Resolution) by
-      host</p>
-    <p>= Same breakdown as the above example except by host </p>
-    <strong>Ingest Pattern - Reads/Writes per-second</strong>
-    <ul>
-      <li>Reads/Writes per-second-rate over time based on the Time Range picker
-        + Time Resolution + Function</li>
-      <li>Overlay is the "Workload" or data.cpu_pct (_introspection)</li>
-    </ul>
-    <h3>Infrastructure Detailed Review</h3>
-    <ul>
-      <li><strong>Total vCPU Count</strong></li>
-      <li>
-        <meta charset="utf-8">
-        <strong>Total vCPU found on host &amp; roles</strong><br>
-        <meta charset="utf-8">
+      <li>Queue Status By Host - % of fill for each queue by host</li>
+      <li>Counts of ERROR/ WARN/ INFO by Component</li>
+      <li>DrillDown and Filter into All Splunkd ERROR/ WARN/ INFO by Component
       </li>
-      <li>CPU - Idle over Time Resolution</li>
-      <li> Memory Utilization % over Time Resolution</li>
-      <li> IOwait in ms by _time, type, mount_point - Trellis</li>
-      <li>IO utilization in KB/s over time vs data.cpu_pct utilization | samples
-        as time resolution rate using last(value) Trellis</li>
-    </ul>
-    <h3>Infrastructure Overview</h3>
-    <ul>
-      <li>CPU Utilization -- Minimum/Maximum/Average</li>
-      <li>vCPU Info (Trellis by Host)</li>
-      <li>CPU Health Summary (data.cpu_idle_pct)</li>
       <ul>
-        <li>Using the drop downs available KPI ranges can be set for measuring
-          CPU Activity in terms of low/moderate/critical (exhaustion) detected.
-          Default values are:</li>
-        <ul>
-          <li>low&gt;85% idle</li>
-          <li>moderate 15%&gt;&lt;85%</li>
-          <li>critical &lt;15%</li>
-        </ul>
-      </ul>
-      <li>Memory Health Status (<strong>data.mem_perc_util=round(('data.mem_used'/'data.mem')*100,2)</strong>)</li>
-      <ul>
-        <li>healthy&lt;90% </li>
-        <li>critical&gt;90% - Memory Exhaustion</li>
-      </ul>
-      <li>Storage Health Status - <strong>(data.avg_total_ms by mount point)</strong></li>
-      <ul>
-        <li>Measures ranges of IOwait found in _introspection to provide a
-          summary overview of storage latency distribution</li>
+        <li>gives the event_message and is sorted by highest count</li>
       </ul>
     </ul>
-    <h3>Splunk Application Errors </h3>
+    <h2> Splunk Application Errors</h2>
     <ul>
-      <li>Blocked Queues (Trellis)</li>
-      <li> All Splunkd Errors/Warnings (sorted by highest count)</li>
-      <li>CM Errors by Component</li>
-      <li>LDAP Authentication Errors</li>
-      <li>SHC Errors</li>
-    </ul>
-    <h3>Splunk Search Review</h3>
-    <ul>
-      <li>Search Concurrency Metrics </li>
-      <li>Search Run Time statistics</li>
-      <li>Timechart stack searches by type based on overall CPU utilization</li>
-      <li>Top Searches Consuming CPU </li>
+      <li> Search Concurrency Metrics *multiple selection is touchy*</li>
+      <ul>
+        <li>Search Concurrency is defined as the total # of vCPUs + 6 base
+          searches. </li>
+        <li>If you are running in a SHC it will be each of those nodes vCPUs + 6
+          base searches to equal your overall base search capacity. </li>
+        <li>Your search concurrency is the # of searches you are running at that
+          time (ad-hoc/scheduled/etc). If your search concurrency exceeds your
+          available search capacity then you will see searches start to queue
+          or be skipped.</li>
+      </ul>
+      <li>Search Run Time Distribution by SH and peers (experimental)</li>
+      <ul>
+        <li>Sample Set is measured in hours/days + peer count (metrics.log) -
+          average runtime is extrapolated into cumulative run hours per Indexer
+          (theoretical)</li>
+      </ul>
+      <li>Timechart stack searches by search type based on overall CPU
+        utilization</li>
+      <ul>
+        <li>This chart tracks a stacked amount of CPU utilization by search
+          types - this indicates the where the search activity is being directed</li>
+      </ul>
+      <li>Top 10 Saved Searches Consuming CPU sorted by highest CPU Utilization</li>
+      <ul>
+        <li>Split-By available for app, label, proveance, user and type of
+          search</li>
+        <li>Sort-By available for CPU Utilization, Writes (MB), Reads (MB)</li>
+      </ul>
     </ul>
   </body>
 </html>
