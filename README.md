@@ -1,6 +1,6 @@
 <html>
   <body>
-    <h1>Read Me - Eureka 1.2.3 - a Splunk Diagnostic and Performance Evaluation Tool</h1>
+    <h1>Read Me - Eureka 1.2.5 - a Monitoring Console Companion application with Focus on Infrastructure Health & Splunk capacity</h1>
     <p>This app is provided by Kate Lawrence-Gupta and is not support by Splunk.
       Please report all issues to https://github.com/klawrencegupta-splunk/sdrt/issues</p>
   <h1> List of Dashboards available</h1>
@@ -56,6 +56,16 @@
           (KPI) that storage contention has been found on the host.</li>
       </ul>
     </ul>
+        <h2>SmartStore Analysis - (beta)</h2>
+    <ul>
+      <li>SmartStore Activity in KB/Elapsed_ms into MB/elapsed time in seconds by action -- overall blended time scale</li>
+      <li>SmartStore Activity by Time Elapsed by Action in MS</li>
+      <li>MBps by SmartStore operations (relative to job/event activity)</li>
+      <li>Remote Downloads in GB by Index ** index for regular expression may not match your deployment</li>
+      <li>Remote Bucket GB Downloads by Index** index for regular expression may not match your deployment</li>
+      <li>Local Evictions by Index in total seconds spent</li>
+      <li>Sums by S2-Index, action, files (activity)
+      </ul>
     <h2>Splunk Application Errors</h2>
     <ul>
       <li>Queue Status By Host - % of fill for each queue by host</li>
