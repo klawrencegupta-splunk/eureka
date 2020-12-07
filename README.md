@@ -61,8 +61,8 @@
       <li>SmartStore Activity in KB/Elapsed_ms into MB/elapsed time in seconds by action -- overall blended time scale</li>
       <li>SmartStore Activity by Time Elapsed by Action in MS</li>
       <li>MBps by SmartStore operations (relative to job/event activity)</li>
-      <li>Remote Downloads in GB by Index ** index for regular expression may not match your deployment</li>
-      <li>Remote Bucket GB Downloads by Index** index for regular expression may not match your deployment</li>
+      <li>Remote Downloads in GB by Index **  Note: index for regular expression may not match your deployment ** </li>
+      <li>Remote Bucket GB Downloads by Inde x** Note: index for regular expression may not match your deployment ** </li>
       <li>Local Evictions by Index in total seconds spent</li>
       <li>Sums by S2-Index, action, files (activity)
       </ul>
